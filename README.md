@@ -1,7 +1,6 @@
 # B站视频下载器
 
-一个带独立窗口的 B 站视频下载器：500×500 的毛玻璃窗口（Windows 11
-丙烯酸效果，含标题栏与边框），基于 `yt-dlp` 下载引擎。
+一个带独立窗口的 B 站视频下载器：，基于 `yt-dlp` 下载引擎。
 当前版本：1.0.1
 
 ## 功能
@@ -23,23 +22,6 @@
   （旧版本放在程序同目录的配置会自动迁移）
 - 开机自启动：在「设置」中一键开关（写入 HKCU 注册表 Run 键，
   无需管理员权限）
-
-## 运行
-
-```bash
-pip install -r requirements.txt
-python main.py
-```
-
-## 打包成 exe
-
-```bash
-pip install pyinstaller
-pyinstaller --noconfirm --onefile --windowed --name "B站视频下载器" `
-  --icon app.ico --add-data "app.ico;." --collect-all yt_dlp main.py
-```
-
-生成的可执行文件在 `dist/B站视频下载器.exe`，双击即可运行，无需安装 Python。
 
 ## 小提示
 
