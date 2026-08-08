@@ -1,2 +1,54 @@
-# B-
-一款没什么用的B站视频下载器，支持BV号、B站视频链接下载B站视频。
+# B站视频下载器
+
+一个带独立窗口的 B 站视频下载器：500×500 的毛玻璃窗口（Windows 11
+丙烯酸效果，含标题栏与边框），基于 `yt-dlp` 下载引擎。
+当前版本：1.0.1
+
+## 功能
+
+- 直接输入 BV 号（如 BV1GJ411x7h7）或粘贴完整链接一键解析：
+  显示标题、UP 主、时长、最高画质、P 数（也支持 av 号）
+- 支持多 P 视频整体下载
+- 可选画质：自动 / 1080P / 720P / 480P / 360P / 仅音频
+- 无需登录即可下载 1080P（大部分视频；4K / 大会员专享除外）
+- 三套四色渐变主题（冰蓝粉 / 暖阳青 / 落霞蓝），在「设置」中一键切换，
+  窗口背景、按钮、输入框等所有元素同步换肤，选择自动保存
+- 下载时优先选择 H.264 编码并统一输出为 mp4，
+  Windows 媒体播放器可直接播放
+- 网络超时自动重试：每次重试都会重新获取 CDN 链接，
+  避开偶发超时的慢节点（最多自动重试 2 次）
+- 实时进度条与下载日志
+- 设置持久化：保存目录、Cookie 选项、默认画质会自动保存到
+  `C:\Users\<用户名>\B站视频下载器\config.json`
+  （旧版本放在程序同目录的配置会自动迁移）
+- 开机自启动：在「设置」中一键开关（写入 HKCU 注册表 Run 键，
+  无需管理员权限）
+
+## 运行
+
+```bash
+pip install -r requirements.txt
+python main.py
+```
+
+## 打包成 exe
+
+```bash
+pip install pyinstaller
+pyinstaller --noconfirm --onefile --windowed --name "B站视频下载器" `
+  --icon app.ico --add-data "app.ico;." --collect-all yt_dlp main.py
+```
+
+生成的可执行文件在 `dist/B站视频下载器.exe`，双击即可运行，无需安装 Python。
+
+## 小提示
+
+- **高清画质（1080P 及以上）**：需要安装 ffmpeg 并加入 PATH（或放到
+  `C:\ffmpeg\bin`）。未检测到 ffmpeg 时，程序会自动只提供免合并画质。
+  ffmpeg 下载：[gyan.dev/ffmpeg](https://www.gyan.dev/ffmpeg/builds/)，
+  或执行 `winget install Gyan.FFmpeg`。
+- 默认画质是「自动」，解析视频后如果该视频没有所选画质会自动降级。
+- **播放兼容性**：B 站同一清晰度可能有 H.264 / HEVC(H.265) / AV1 三种编码，
+  Windows 媒体播放器只支持 H.264。下载器会优先选 H.264；若某视频某画质
+  只有 HEVC/AV1（如部分 4K 视频），程序会在日志中提示，此时可用
+  VLC / PotPlayer 播放，或在 Microsoft Store 安装 HEVC 扩展。
